@@ -5,7 +5,6 @@ public class Main {
         Scanner in = new Scanner(System.in);
         System.out.println(calc(in.nextLine()));
     }
-
     public static String calc(String input) throws Exception {
         int a, b;
         char sign;
@@ -20,14 +19,11 @@ public class Main {
         if (listOfVal[0].trim().matches("^[IVX].*$")) {
             a = romeToArab(listOfVal[0].trim());
             b = romeToArab(listOfVal[1].trim());
-            if (a < b) throw e;
-            return switch (sign) {
-                case '+' -> arabToRome(a + b);
-                case '-' -> arabToRome(a - b);
-                case '/' -> arabToRome(a / b);
-                case '*' -> arabToRome(a * b);
-                default -> "";
-            };
+            if (sign == '+') return arabToRome(a + b);
+            if (sign == '*') return arabToRome(a * b);
+            if (a > b && sign == '-') return arabToRome(a - b);
+            if (a >= b && sign == '/') return arabToRome(a / b);
+            else throw e;
         }
         else {
             a = Integer.parseInt(listOfVal[0].trim());
@@ -44,14 +40,9 @@ public class Main {
     }
 
     static int romeToArab(String num) throws Exception {
-        int res = 0;
         String[] list = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-        for (String n : list) {
-            res++;
-            if (n.equals(num)) break;
-        }
-        if(res == 0) throw new Exception();
-        return res;
+        if (Arrays.asList(list).contains(num)) return Arrays.asList(list).indexOf(num) + 1;
+        else throw new Exception();
     }
 
     static String arabToRome(int num) {
